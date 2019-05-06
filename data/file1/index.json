@@ -1,0 +1,7 @@
+{
+  "name": "index",
+  "rand1": %rand(5,10)%
+  "rand2": %rand(1,a)%
+  "rand3": %rand(3, 8)%
+  "rand3": %rand(4, 4)%
+}

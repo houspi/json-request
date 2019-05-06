@@ -1,0 +1,4 @@
+{
+  "name": "index",
+  "rand1": %rand(0,20)%
+}
