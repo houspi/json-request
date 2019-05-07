@@ -36,8 +36,8 @@ my $cgi = CGI->new();
 
 my $method = $cgi->request_method();
 my $auth_key = $cgi->param('auth_key');
-my $path = $cgi->param('path');
 
+my $path = $cgi->param('path');
 $path =~ s/\.\.//g;
 $path =~ s/^\/+|\/+$//g;
 
