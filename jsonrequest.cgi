@@ -35,7 +35,8 @@ my $content = "";
 my $cgi = CGI->new();
 
 my $method = $cgi->request_method();
-my $auth_key = $cgi->param('auth_key');
+#my $auth_key = $cgi->param('auth_key');
+my $auth_key = $cgi->http('X-Auth-Key');
 
 my $path = $cgi->param('path') || '';
 $path =~ s/\.\.//g;
