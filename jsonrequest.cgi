@@ -27,7 +27,6 @@ my %AllowedMethods = (
 
 my $ValidKey = "zbg6fa,sht.uags";
 my $BaseDir = "/home/edi/epam/jsonrequest/data/";
-$BaseDir = "/home/edi/progs/perl/epam/json-request/data/";
 my $IndexFile = "index.json";
 
 my $http_code = HTTP_OK;
@@ -47,7 +46,6 @@ if ( $auth_key ne $ValidKey) {
 } elsif ( ! $AllowedMethods{$method} ) {
     $http_code = HTTP_METHOD_NOT_ALLOWED;
 } elsif ( !-f $BaseDir.$path."/".$IndexFile) {
-	print "error search $BaseDir$path/$IndexFile \n";
     $http_code = HTTP_NOT_FOUND;
 } else {
     if ( open(INDEX, $BaseDir.$path."/".$IndexFile) ) {
@@ -55,7 +53,6 @@ if ( $auth_key ne $ValidKey) {
         $content = <INDEX>;
         close INDEX;
     } else {
-	print "error open\n";
         $http_code = HTTP_NOT_FOUND;
     }
 }
