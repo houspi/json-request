@@ -5,7 +5,7 @@ use warnings;
 
 use CGI;
 use HTTP::Status qw(:constants :is status_message);
-#use HOP::Lexer;
+use HOP::Lexer;
 
 my %Substitutions = (
     "%VALUE%" => \&replace_VALUE,
@@ -27,6 +27,7 @@ my %AllowedMethods = (
 
 my $ValidKey = "zbg6fa,sht.uags";
 my $BaseDir = "/home/edi/epam/jsonrequest/data/";
+$BaseDir = "/home/edi/progs/perl/epam/json-request/data/";
 my $IndexFile = "index.json";
 
 my $http_code = HTTP_OK;
@@ -37,7 +38,7 @@ my $cgi = CGI->new();
 my $method = $cgi->request_method();
 my $auth_key = $cgi->param('auth_key');
 
-my $path = $cgi->param('path');
+my $path = $cgi->param('path') || '';
 $path =~ s/\.\.//g;
 $path =~ s/^\/+|\/+$//g;
 
@@ -46,6 +47,7 @@ if ( $auth_key ne $ValidKey) {
 } elsif ( ! $AllowedMethods{$method} ) {
     $http_code = HTTP_METHOD_NOT_ALLOWED;
 } elsif ( !-f $BaseDir.$path."/".$IndexFile) {
+	print "error search $BaseDir$path/$IndexFile \n";
     $http_code = HTTP_NOT_FOUND;
 } else {
     if ( open(INDEX, $BaseDir.$path."/".$IndexFile) ) {
@@ -53,6 +55,7 @@ if ( $auth_key ne $ValidKey) {
         $content = <INDEX>;
         close INDEX;
     } else {
+	print "error open\n";
         $http_code = HTTP_NOT_FOUND;
     }
 }
@@ -111,7 +114,7 @@ sub replace_one {
     my $param = shift;
     my @list = ();
     my $size;
-    while ( $param =~ /('.*?'),?\s*/g ) {
+    while ( $param =~ /'(.*?)',?\s*/g ) {
         $size = push(@list, "\"$1\"");
     }
     if ($size) {
